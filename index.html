@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paperdrop - Software Consultancy | Digital Transformation & Automation</title>
+  <meta name="description" content="Paperdrop is a modern software consultancy specializing in digital transformation, process automation, and AI-driven solutions for businesses.">
+  <meta name="keywords" content="Software Consultancy, Digital Transformation, Process Automation, AI Solutions, ContractDrop, Paperless Solutions, LLMs, Copilot, AI Integration">
+  <meta name="author" content="Paperdrop">
+  <link rel="canonical" href="https://www.paperdrop.io/">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #4A90E2;
+      --background-light: #ffffff;
+      --background-dark: #121212;
+      --text-light: #333;
+      --text-dark: #f0f0f0;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Ubuntu', sans-serif;
+      background-color: var(--background-light);
+      color: var(--text-light);
+      transition: background-color 0.3s, color 0.3s;
+      padding: 20px;
+    }
+
+    body.dark-mode {
+      background-color: var(--background-dark);
+      color: var(--text-dark);
+    }
+
+    .top-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 20px;
+      border-bottom: 1px solid #ddd;
+      animation: fadeSlideIn 1s ease-out;
+    }
+
+    .top-bar img {
+      max-height: 60px;
+      animation: fadeSlideIn 1s ease-out;
+    }
+
+    .top-bar .logo-text {
+      font-size: 2.5em;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-top: 10px;
+      animation: fadeSlideIn 1.2s ease-out;
+    }
+
+    .top-bar .tagline {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-top: 5px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .toggle-mode {
+      position: fixed;
+      top: 40px;
+      right: 20px;
+      background-color: transparent;
+      border: none;
+      padding-left: 10px;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: var(--primary-color);
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    section {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      animation: fadeSection 1s ease-in;
+    }
+
+    @keyframes fadeSection {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .intro, .about, .ai-section {
+      text-align: center;
+    }
+
+    .intro h2, .about h2, .ai-section h2 {
+      font-size: 2.2em;
+      margin-bottom: 20px;
+    }
+
+    .intro p, .about p, .ai-section p {
+      font-size: 1.2em;
+      line-height: 1.8;
+      text-align: left;
+    }
+
+    .services {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .service {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      margin: 10px;
+      flex: 1 1 300px;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .dark-mode .service {
+      background: #1f1f1f;
+      box-shadow: 0 4px 6px rgba(255, 255, 255, 0.05);
+    }
+
+    .service h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+
+    .app-section {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 40px 30px;
+      margin: 40px auto;
+      max-width: 1000px;
+      text-align: center;
+    }
+
+    .dark-mode .app-section {
+      background: #1f1f1f;
+      box-shadow: 0 4px 6px rgba(255, 255, 255, 0.05);
+    }
+
+    .app-section h2 {
+      font-size: 2.2em;
+      margin-bottom: 25px;
+      color: var(--primary-color);
+    }
+
+    .app-section p {
+      font-size: 1.2em;
+      line-height: 1.8;
+    }
+
+    ul, ol {
+      margin: 15px 0 15px 25px;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+      overflow-x: auto;
+    }
+
+    footer p {
+      margin: 10px 0;
+      font-size: 1em;
+      line-height: 1.6em;
+    }
+
+    .copy-icon {
+      cursor: pointer;
+      margin-left: 8px;
+      font-size: 1.1em;
+      color: var(--primary-color);
+    }
+
+    .toast {
+      visibility: hidden;
+      min-width: 200px;
+      margin-left: -100px;
+      background-color: #4A90E2;
+      color: white;
+      text-align: center;
+      border-radius: 4px;
+      padding: 12px;
+      position: fixed;
+      z-index: 1;
+      left: 50%;
+      bottom: 30px;
+      font-size: 1em;
+    }
+
+    .toast.show {
+      visibility: visible;
+      -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+
+    @-webkit-keyframes fadein {
+      from { bottom: 0; opacity: 0; }
+      to { bottom: 30px; opacity: 1; }
+    }
+
+    @keyframes fadein {
+      from { bottom: 0; opacity: 0; }
+      to { bottom: 30px; opacity: 1; }
+    }
+
+    @-webkit-keyframes fadeout {
+      from { bottom: 30px; opacity: 1; }
+      to { bottom: 0; opacity: 0; }
+    }
+
+    @keyframes fadeout {
+      from { bottom: 30px; opacity: 1; }
+      to { bottom: 0; opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .top-bar .logo-text {
+        font-size: 2em;
+      }
+
+      .top-bar .tagline {
+        font-size: 1em;
+        margin-top: 10px;
+      }
+
+      .toggle-mode {
+        top: 15px;
+        right: 15px;
+      }
+
+      section {
+        padding: 30px 10px;
+      }
+
+      .service {
+        max-width: 95%;
+        padding: 20px;
+      }
+
+      .app-section {
+        padding: 25px 10px;
+      }
+
+      footer p {
+        font-size: 0.9em;
+        line-height: 1.6em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="top-bar">
+    <img src="Logo.avif" alt="Paperdrop Logo">
+    <div class="logo-text">Paperdrop</div>
+    <button class="toggle-mode" onclick="toggleDarkMode()">🌓</button>
+  </div>
+
+  <section class="intro">
+    <h2>About Us</h2>
+    <p>
+      Paperdrop is a modern software consultancy focused on helping organizations streamline processes, adopt digital solutions,
+      and reduce their reliance on paper. We help you embrace efficiency, sustainability, and superior user experiences.
+    </p>
+  </section>
+
+  <section class="about">
+    <h2>Our Story</h2>
+    <p>
+      We are a group of passionate technical professionals with a combined industry experience of 50 years. We created this software consultancy firm dedicated to helping small - midsize businesses transform their paper-based processes into efficient, automated solutions. Our team is composed of experienced product managers, trainers, designers, architects and developers that are experts in building & leveraging technology.
+      <br/><br/>
+      We understand that many businesses still rely on paper-based processes, which can be time-consuming, error-prone, and costly. That's why we're committed to working closely with our clients to develop custom software solutions that automate their workflows, reduce errors, and save time and money.
+      <br/><br/>
+      Our team has a wide range of expertise in areas such as document management, workflow automation, and data analysis. We'll work closely with you to understand your business processes, identify pain points, and develop a tailored solution that meets your unique needs.
+      <br/><br/>
+      We're focused on helping businesses of all sizes make the transition from paper-based processes to automated solutions. We believe that technology should be accessible to all businesses, and we're committed to delivering affordable solutions that provide a rapid return on investment.
+      <br/><br/>
+      So why choose us for your automation needs? We're passionate about helping businesses streamline their workflows and improve their bottom line. Contact us today to learn more about how we can help your business transition from paper-based processes to automated solutions.
+    </p>
+  </section>
+
+  <section>
+    <h2 style="text-align: center;">Our Services</h2>
+    <div class="services">
+      <div class="service">
+        <h3>Digital Transformation</h3>
+        <p>
+          Guiding organizations through the adoption of digital tools and workflows to improve productivity and reduce waste.
+        </p>
+      </div>
+      <div class="service">
+        <h3>Process Automation</h3>
+        <p>
+          Implementing automation solutions that eliminate repetitive tasks, freeing up time for innovation and growth.
+        </p>
+      </div>
+      <div class="service">
+        <h3>Consulting & Training</h3>
+        <p>
+          Providing expert advice and hands-on training to ensure your team can fully leverage new technologies and practices.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ai-section">
+    <h2>AI Ready Solutions</h2>
+    <p>
+      Our team at Paperdrop is dedicated to helping businesses leverage the power of AI and Large Language Models (LLMs).
+      <br/><br/>
+      Whether you're looking to integrate intelligent copilots into your existing software, build AI assistants for your team, or develop custom LLMs specifically trained on your company’s data and processes — we can help.
+      <br/><br/>
+      We design and build AI-ready systems that:
+      <ul class="list" style="text-align: left; display: inline-block; margin-top: 15px; line-height: 20px;">
+        <li>Integrate seamlessly with industry-leading AI platforms like Copilot, ChatGPT, and more</li>
+        <li>Create domain-specific LLMs tailored for your company and industry</li>
+        <li>Improve team productivity with context-aware AI assistants</li>
+        <li>Enhance decision making with AI-driven insights</li>
+        <li>Future-proof your software and workflows for the evolving AI landscape</li>
+      </ul>
+    </p>
+  </section>
+
+ 
+  <footer>
+    <p>&copy; 2025 Paperdrop. All rights reserved.</p>
+    <p>Phone: +1 437 449 6106 <span class="copy-icon" onclick="copyToClipboard('+14374496106')">📞</span> |
+      Email: <a href="mailto:deepak@paperdrop.io" style="color: #4A90E2;">deepak@paperdrop.io</a>
+      <span class="copy-icon" onclick="copyToClipboard('deepak@paperdrop.io')">✉️</span>
+    </p>
+    <p>Locations: Toronto | Pune</p>
+    <p style="font-size: 0.9em; opacity: 0.7;">This website was built by an in-house LLM (Benefactor-v1.10).</p>
+  </footer>
+
+  <div id="toast" class="toast">Copied to clipboard</div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast();
+      }, err => {
+        console.error('Error copying text: ', err);
+      });
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.className = 'toast show';
+      setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 3000);
+    }
+  </script>
+</body>
+
+</html>
