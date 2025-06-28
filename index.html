@@ -13,189 +13,391 @@
   <style>
     :root {
       --primary-color: #4A90E2;
-      --background-light: #ffffff;
-      --background-dark: #121212;
-      --text-light: #333;
-      --text-dark: #f0f0f0;
+      --secondary-color: #667eea;
+      --accent-color: #764ba2;
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --background-light: #f8fafc;
+      --background-dark: #0f172a;
+      --text-light: #334155;
+      --text-dark: #e2e8f0;
+      --card-light: #ffffff;
+      --card-dark: #1e293b;
+      --shadow-light: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --shadow-dark: 0 10px 25px rgba(0, 0, 0, 0.3);
+      --border-radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
       margin: 0;
       font-family: 'Ubuntu', sans-serif;
-      background-color: var(--background-light);
+      background: var(--background-light);
       color: var(--text-light);
-      transition: background-color 0.3s, color 0.3s;
-      padding: 20px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
     body.dark-mode {
-      background-color: var(--background-dark);
+      background: var(--background-dark);
       color: var(--text-dark);
     }
 
-    .top-bar {
+    .hero-section {
+      background: var(--gradient-primary);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      padding: 15px 20px;
-      border-bottom: 1px solid #ddd;
-      animation: fadeSlideIn 1s ease-out;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    .top-bar img {
-      max-height: 60px;
-      animation: fadeSlideIn 1s ease-out;
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      animation: float 20s ease-in-out infinite;
     }
 
-    .top-bar .logo-text {
-      font-size: 2.5em;
-      font-weight: bold;
-      color: var(--primary-color);
-      margin-top: 10px;
-      animation: fadeSlideIn 1.2s ease-out;
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(1deg); }
     }
 
-    .top-bar .tagline {
-      font-size: 1.2em;
-      font-weight: bold;
-      color: var(--primary-color);
-      margin-top: 5px;
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 2rem;
     }
 
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.7; }
-      100% { transform: scale(1); opacity: 1; }
+    .logo-container {
+      margin-bottom: 2rem;
+      animation: logoGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes logoGlow {
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
+      50% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5)); }
+    }
+
+    .hero-logo {
+      max-height: 80px;
+      border-radius: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-logo:hover {
+      transform: scale(1.05) rotate(2deg);
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      color: white;
+      margin: 1rem 0;
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      animation: slideInUp 1s ease-out;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+      animation: slideInUp 1s ease-out 0.2s both;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+      animation: slideInUp 1s ease-out 0.4s both;
+    }
+
+    .cta-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
 
     .toggle-mode {
       position: fixed;
-      top: 40px;
-      right: 20px;
-      background-color: transparent;
-      border: none;
-      padding-left: 10px;
+      top: 2rem;
+      right: 2rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.75rem;
       font-size: 1.5em;
       cursor: pointer;
-      color: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    @keyframes fadeSlideIn {
+    .toggle-mode:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1) rotate(180deg);
+    }
+
+    @keyframes slideInUp {
       from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
         transform: translateY(0);
       }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
     }
 
     section {
-      padding: 40px 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-      animation: fadeSection 1s ease-in;
+      padding: 5rem 0;
+      animation: fadeInOnScroll 0.8s ease-out;
     }
 
-    @keyframes fadeSection {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
     }
 
     .intro, .about, .ai-section {
       text-align: center;
     }
 
-    .intro h2, .about h2, .ai-section h2 {
-      font-size: 2.2em;
-      margin-bottom: 20px;
+    .intro p, .about p, .ai-section p {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      line-height: 1.8;
+      max-width: 800px;
+      margin: 0 auto 2rem auto;
+      color: var(--text-light);
     }
 
-    .intro p, .about p, .ai-section p {
-      font-size: 1.2em;
-      line-height: 1.8;
-      text-align: left;
+    .dark-mode .intro p,
+    .dark-mode .about p,
+    .dark-mode .ai-section p {
+      color: var(--text-dark);
     }
 
     .services {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
     }
 
     .service {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 25px;
-      margin: 10px;
-      flex: 1 1 300px;
-      max-width: 300px;
+      background: var(--card-light);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-light);
+      padding: 2.5rem;
       text-align: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .service::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .service:hover::before {
+      transform: scaleX(1);
+    }
+
+    .service:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     }
 
     .dark-mode .service {
-      background: #1f1f1f;
-      box-shadow: 0 4px 6px rgba(255, 255, 255, 0.05);
+      background: var(--card-dark);
+      box-shadow: var(--shadow-dark);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .service-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .service h3 {
-      margin-top: 0;
+      margin: 1rem 0;
       color: var(--primary-color);
+      font-size: 1.5rem;
+      font-weight: 600;
     }
 
-    .app-section {
-      background: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 40px 30px;
-      margin: 40px auto;
-      max-width: 1000px;
-      text-align: center;
+    .service p {
+      color: var(--text-light);
+      line-height: 1.6;
     }
 
-    .dark-mode .app-section {
-      background: #1f1f1f;
-      box-shadow: 0 4px 6px rgba(255, 255, 255, 0.05);
+    .dark-mode .service p {
+      color: var(--text-dark);
     }
 
-    .app-section h2 {
-      font-size: 2.2em;
-      margin-bottom: 25px;
-      color: var(--primary-color);
+    .ai-section {
+      background: var(--card-light);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-light);
+      padding: 4rem 2rem;
+      margin: 4rem auto;
+      position: relative;
+      overflow: hidden;
     }
 
-    .app-section p {
-      font-size: 1.2em;
-      line-height: 1.8;
+    .ai-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: var(--gradient-secondary);
+      opacity: 0.05;
+      animation: rotate 20s linear infinite;
     }
 
-    ul, ol {
-      margin: 15px 0 15px 25px;
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .dark-mode .ai-section {
+      background: var(--card-dark);
+      box-shadow: var(--shadow-dark);
+    }
+
+    .ai-section .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .feature-item {
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .dark-mode .feature-item {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .feature-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-item::before {
+      content: '✨';
+      display: block;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
     }
 
     footer {
-      background-color: #333;
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
       color: white;
       text-align: center;
-      padding: 20px;
-      margin-top: 50px;
-      overflow-x: auto;
+      padding: 3rem 0;
+      margin-top: 0;
+      position: relative;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--gradient-primary);
+    }
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
     }
 
     footer p {
-      margin: 10px 0;
-      font-size: 1em;
-      line-height: 1.6em;
+      margin: 1rem 0;
+      font-size: 1rem;
+      line-height: 1.6;
+      opacity: 0.9;
     }
 
     .copy-icon {
@@ -203,146 +405,278 @@
       margin-left: 8px;
       font-size: 1.1em;
       color: var(--primary-color);
+      transition: all 0.3s ease;
+    }
+
+    .copy-icon:hover {
+      transform: scale(1.2);
+      filter: brightness(1.2);
     }
 
     .toast {
       visibility: hidden;
-      min-width: 200px;
-      margin-left: -100px;
-      background-color: #4A90E2;
+      min-width: 250px;
+      margin-left: -125px;
+      background: var(--gradient-primary);
       color: white;
       text-align: center;
-      border-radius: 4px;
-      padding: 12px;
+      border-radius: var(--border-radius);
+      padding: 1rem 1.5rem;
       position: fixed;
-      z-index: 1;
+      z-index: 1001;
       left: 50%;
-      bottom: 30px;
-      font-size: 1em;
+      bottom: 2rem;
+      font-size: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
     }
 
     .toast.show {
       visibility: visible;
-      -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      animation: slideInToast 0.5s ease-out, slideOutToast 0.5s ease-out 2.5s;
     }
 
-    ul li {
-      margin-bottom: 10px;
+    @keyframes slideInToast {
+      from {
+        bottom: 0;
+        opacity: 0;
+        transform: translateX(-50%) translateY(100%);
+      }
+      to {
+        bottom: 2rem;
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
     }
 
-    @-webkit-keyframes fadein {
-      from { bottom: 0; opacity: 0; }
-      to { bottom: 30px; opacity: 1; }
+    @keyframes slideOutToast {
+      from {
+        bottom: 2rem;
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      to {
+        bottom: 0;
+        opacity: 0;
+        transform: translateX(-50%) translateY(100%);
+      }
     }
 
-    @keyframes fadein {
-      from { bottom: 0; opacity: 0; }
-      to { bottom: 30px; opacity: 1; }
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      animation: bounce 2s infinite;
     }
 
-    @-webkit-keyframes fadeout {
-      from { bottom: 30px; opacity: 1; }
-      to { bottom: 0; opacity: 0; }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-10px); }
+      60% { transform: translateX(-50%) translateY(-5px); }
     }
 
-    @keyframes fadeout {
-      from { bottom: 30px; opacity: 1; }
-      to { bottom: 0; opacity: 0; }
-    }
-
-    @media (max-width: 600px) {
-      .top-bar .logo-text {
-        font-size: 2em;
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-section {
+        min-height: 100vh;
+        padding: 2rem 1rem;
       }
 
-      .top-bar .tagline {
-        font-size: 1em;
-        margin-top: 10px;
+      .hero-content {
+        padding: 1rem;
       }
 
       .toggle-mode {
-        top: 15px;
-        right: 15px;
+        top: 1rem;
+        right: 1rem;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2em;
       }
 
       section {
-        padding: 30px 10px;
+        padding: 3rem 0;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .services {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
 
       .service {
-        max-width: 95%;
-        padding: 20px;
+        padding: 2rem;
       }
 
-      .app-section {
-        padding: 25px 10px;
+      .ai-section {
+        padding: 3rem 1rem;
+        margin: 2rem 1rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        padding: 0 1rem;
       }
 
       footer p {
-        font-size: 0.9em;
-        line-height: 1.6em;
+        font-size: 0.9rem;
       }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .cta-button {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .service {
+        padding: 1.5rem;
+      }
+
+      .toast {
+        min-width: 200px;
+        margin-left: -100px;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Tablet specific styles */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .services {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Animation for elements coming into view */
+    .fade-in-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+
+    .fade-in-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Smooth scroll behavior */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Focus styles for accessibility */
+    .toggle-mode:focus,
+    .cta-button:focus,
+    .copy-icon:focus {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="top-bar">
-    <img src="Logo.avif" alt="Paperdrop Logo">
-    <div class="logo-text">Paperdrop</div>
-    <button class="toggle-mode" onclick="toggleDarkMode()">🌓</button>
-  </div>
+  <button class="toggle-mode" onclick="toggleDarkMode()">🌓</button>
 
-  <section class="intro">
-    <h2>About Us</h2>
-    <p>
-      Paperdrop is a modern software consultancy focused on helping organizations streamline processes, adopt digital solutions,
-      and reduce their reliance on paper. We help you embrace efficiency, sustainability, and superior user experiences.
-    </p>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="logo-container">
+        <img src="Logo.avif" alt="Paperdrop Logo" class="hero-logo">
+      </div>
+      <h1 class="hero-title">Paperdrop</h1>
+      <p class="hero-subtitle">Transforming businesses through digital innovation and AI-powered solutions</p>
+      <a href="#about" class="cta-button">Discover Our Story</a>
+    </div>
+    <div class="scroll-indicator">
+      <div style="font-size: 1.5rem;">↓</div>
+      <div style="font-size: 0.9rem; margin-top: 0.5rem;">Scroll to explore</div>
+    </div>
   </section>
 
+  <!-- About Section -->
+  <section id="about" class="intro">
+    <div class="container">
+      <h2 class="section-title">About Us</h2>
+      <p>
+        Paperdrop is a modern software consultancy focused on helping organizations streamline processes, adopt digital solutions,
+        and reduce their reliance on paper. We help you embrace efficiency, sustainability, and superior user experiences.
+      </p>
+    </div>
+  </section>
+
+  <!-- Our Story Section -->
   <section class="about">
-    <h2>Our Story</h2>
-    <p>
-      We are a group of passionate technical professionals with a combined industry experience of 50 years. We created this software consultancy firm dedicated to helping small - midsize businesses transform their paper-based processes into efficient, automated solutions. Our team is composed of experienced product managers, trainers, designers, architects and developers that are experts in building & leveraging technology.
-      <br/><br/>
-      We understand that many businesses still rely on paper-based processes, which can be time-consuming, error-prone, and costly. That's why we're committed to working closely with our clients to develop custom software solutions that automate their workflows, reduce errors, and save time and money.
-      <br/><br/>
-      Our team has a wide range of expertise in areas such as document management, workflow automation, and data analysis. We'll work closely with you to understand your business processes, identify pain points, and develop a tailored solution that meets your unique needs.
-      <br/><br/>
-      We're focused on helping businesses of all sizes make the transition from paper-based processes to automated solutions. We believe that technology should be accessible to all businesses, and we're committed to delivering affordable solutions that provide a rapid return on investment.
-      <br/><br/>
-      So why choose us for your automation needs? We're passionate about helping businesses streamline their workflows and improve their bottom line. Contact us today to learn more about how we can help your business transition from paper-based processes to automated solutions.
-    </p>
+    <div class="container">
+      <h2 class="section-title">Our Story</h2>
+      <p>
+        We are a group of passionate technical professionals with a combined industry experience of 50 years. We created this software consultancy firm dedicated to helping small to midsize businesses transform their paper-based processes into efficient, automated solutions.
+      </p>
+      <p>
+        Our team is composed of experienced product managers, trainers, designers, architects and developers that are experts in building & leveraging technology. We understand that many businesses still rely on paper-based processes, which can be time-consuming, error-prone, and costly.
+      </p>
+      <p>
+        We're committed to working closely with our clients to develop custom software solutions that automate their workflows, reduce errors, and save time and money. Our focus is on delivering affordable solutions that provide a rapid return on investment.
+      </p>
+    </div>
   </section>
 
+  <!-- Services Section -->
   <section>
-    <h2 style="text-align: center;">Our Services</h2>
-    <div class="services">
-      <div class="service">
-        <h3>Digital Transformation</h3>
-        <p>
-          Guiding organizations through the adoption of digital tools and workflows to improve productivity and reduce waste.
-        </p>
-      </div>
-      <div class="service">
-        <h3>Process Automation</h3>
-        <p>
-          Implementing automation solutions that eliminate repetitive tasks, freeing up time for innovation and growth.
-        </p>
-      </div>
-      <div class="service">
-        <h3>Consulting & Training</h3>
-        <p>
-          Providing expert advice and hands-on training to ensure your team can fully leverage new technologies and practices.
-        </p>
+    <div class="container">
+      <h2 class="section-title">Our Services</h2>
+      <div class="services">
+        <div class="service fade-in-on-scroll">
+          <div class="service-icon">🚀</div>
+          <h3>Digital Transformation</h3>
+          <p>
+            Guiding organizations through the adoption of digital tools and workflows to improve productivity and reduce waste.
+          </p>
+        </div>
+        <div class="service fade-in-on-scroll">
+          <div class="service-icon">⚡</div>
+          <h3>Process Automation</h3>
+          <p>
+            Implementing automation solutions that eliminate repetitive tasks, freeing up time for innovation and growth.
+          </p>
+        </div>
+        <div class="service fade-in-on-scroll">
+          <div class="service-icon">🎯</div>
+          <h3>Consulting & Training</h3>
+          <p>
+            Providing expert advice and hands-on training to ensure your team can fully leverage new technologies and practices.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="ai-section">
+  <section class="ai-section fade-in-on-scroll">
     <h2>AI Ready Solutions</h2>
     <p>
       Our team at Paperdrop is dedicated to helping businesses leverage the power of AI and Large Language Models (LLMs).
@@ -360,15 +694,17 @@
     </p>
   </section>
 
- 
+  <!-- Footer -->
   <footer>
-    <p>&copy; 2025 Paperdrop. All rights reserved.</p>
-    <p>Phone: +1 437 449 6106 <span class="copy-icon" onclick="copyToClipboard('+14374496106')">📞</span> |
-      Email: <a href="mailto:deepak@paperdrop.io" style="color: #4A90E2;">deepak@paperdrop.io</a>
-      <span class="copy-icon" onclick="copyToClipboard('deepak@paperdrop.io')">✉️</span>
-    </p>
-    <p>Locations: Toronto | Pune</p>
-    <p style="font-size: 0.9em; opacity: 0.7;">This website was built by an in-house LLM (Benefactor-v1.10).</p>
+    <div class="footer-content">
+      <p>&copy; 2025 Paperdrop. All rights reserved.</p>
+      <p>Phone: +1 437 449 6106 <span class="copy-icon" onclick="copyToClipboard('+14374496106')">📞</span> |
+        Email: <a href="mailto:deepak@paperdrop.io" style="color: #4A90E2;">deepak@paperdrop.io</a>
+        <span class="copy-icon" onclick="copyToClipboard('deepak@paperdrop.io')">✉️</span>
+      </p>
+      <p>Locations: Toronto | Pune</p>
+      <p style="font-size: 0.9em; opacity: 0.7;">This website was built by an in-house LLM (Benefactor-v1.10).</p>
+    </div>
   </footer>
 
   <div id="toast" class="toast">Copied to clipboard</div>
@@ -376,6 +712,7 @@
   <script>
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
     }
 
     function copyToClipboard(text) {
@@ -391,6 +728,47 @@
       toast.className = 'toast show';
       setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 3000);
     }
+
+    // Smooth scroll for anchor links
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load dark mode preference
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+      }
+
+      // Intersection Observer for fade-in animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, observerOptions);
+
+      // Observe all fade-in elements
+      document.querySelectorAll('.fade-in-on-scroll').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    });
   </script>
 </body>
 
